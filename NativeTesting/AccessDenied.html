@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+    <title>Error: Incorrect User Credentials</title>
+    <style>
+
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f7f7f7;
+      }
+
+      .container {
+        margin: 0 auto;
+        width: 50%;
+        text-align: center;
+        margin-top: 50px;
+        background-color: #ffffff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+      }
+
+      h1 {
+        color: #ff6b6b;
+      }
+
+      a {
+        color: #fff;
+        background-color: #4CAF50;
+        padding: 10px;
+        border-radius: 5px;
+        text-decoration: none;
+        margin-top: 20px;
+        display: inline-block;
+        cursor: pointer;
+      }
+
+      a:hover {
+        background-color: #3e8e41;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Access Denied</h1>
+      <a onclick="clearSession()">Go back to the Home page</a>
+    </div>
+  </body>
+  <script>
+
+    function clearSession() {
+      $.ajax({
+        url: 'LogOut',
+        type: 'POST',
+        processData: false,
+        contentType: false,
+        success: function (response) {
+          console.log("response session logout : " + response);
+          if (response !== "") {
+            location.replace("index.html");
+          }
+        },
+        error: function (xhr, textstatus, errorThrown) {
+          console.log(xhr.responseText);
+        }
+      });
+    }
+  </script>
+
+</html>

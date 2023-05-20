@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+
+<Realm className="org.apache.catalina.realm.JDBCRealm"
+      driverName="org.postgresql.Driver"
+   connectionURL="jdbc:postgresql://localhost:5432/Application?user=postgres&amp;password=Sanjay@1206"
+       userTable="usersauthentication" userNameCol="username" userCredCol="password"
+   userRoleTable="user_roles" roleNameCol="role"/>
+    
+    <!-- <Realm className="org.apache.catalina.realm.JDBCRealm"
+        driverName="org.postgresql.Driver"
+        connectionURL="jdbc:postgresql://localhost:5432/Application?user=postgres&amp;password=Sanjay@1206"
+        userTable="usersauthentication" userNameCol="username" userCredCol="password"
+        userRoleTable="user_roles" roleNameCol="role" credentialHandlerClassName="com.PasswordCredentialHandler" debug="99"/> -->
+<!--  digest="SHA-256" debug="99"
+    <Realm className="org.apache.catalina.realm.JDBCRealm"
+        driverName="org.postgresql.Driver"
+        connectionURL="jdbc:postgresql://localhost:5432/Application?user=postgres&amp;password=Sanjay@1206"
+        userTable="usersauthentication" userNameCol="username" userCredCol="password"
+        userRoleTable="user_roles" roleNameCol="role" digest="bcrypt" debug="99" /> -->
+
+        <!-- <Realm className="org.apache.catalina.realm.JDBCRealm"
+    driverName="org.postgresql.Driver"
+    connectionURL="jdbc:postgresql://localhost:5432/Application?user=postgres&amp;password=Sanjay@1206"
+    userTable="usersauthentication" userNameCol="username" userCredCol="password"
+    userRoleTable="user_roles" roleNameCol="role" digest="bcrypt"
+    credentialHandlerClassName="com.BCryptCredentialHandler"
+    debug="99" /> -->
+
+        
+    <!-- <Realm className="org.apache.catalina.realm.JDBCRealm"
+    driverName="org.postgresql.Driver"
+    connectionURL="jdbc:postgresql://localhost:5432/Application?user=postgres&amp;password=Sanjay@1206"
+    userTable="usersauthentication" userNameCol="username" userCredCol="password"
+    userRoleTable="user_roles" roleNameCol="role" credentialHandlerClassName="org.apache.catalina.realm.BCryptCredentialHandler" debug="99" /> -->
+
+
+<!-- 
+    <CredentialHandler className="org.apache.catalina.realm.MessageDigestCredentialHandler"
+        algorithm="bcrypt" /> -->
+
+</Context>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link rel="stylesheet" href="AuthStyle.css">
+</head>
+
+
+
+<body>
+  <section id="cover" class="min-vh-100">
+    <div id="cover-caption">
+      <div class="container">
+        <div class="row text-white">
+          <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4">
+            <h1 class="display-4 py-2 text-truncate" style="padding-bottom: 2rem;">Login Form</h1>
+            <div class="px-2">
+              <form id="myform" method="POST" action="j_security_check" class="justify-content-center">
+                <div class="form-group">
+                  <label class="sr-only">Name</label>
+                  <input name="j_username" type="text" class="form-control" id="Username" aria-describedby="emailHelp"
+                    placeholder="User Name" style="width: 85%;">
+                  <p class="username"></p>
+                </div>
+                <div class="form-group">
+                  <label class="sr-only">Password</label>
+                  <div class="password-container">
+                    <input name="j_password" type="password" class="form-control" id="password" placeholder="password"
+                      style="width: 85%;">
+                    <span class="password-toggle" onclick="togglePassword()">
+                      <i class="fa fa-eye"></i>
+                    </span>
+                  </div>
+                  <p class="password"></p>
+                </div>
+                <div class="text-center">
+                  <!-- <input type="hidden" name="javax.servlet.security.checked" value="true"> -->
+                  <input type="submit" value="LOGIN" id="btn">
+                </div>
+
+              </form>
+            </div>
+
+            <div id="register" class="form-text text-center mb-5" style="margin-top:3rem; color:white;">Not
+              Registered? <a href="register.html" class="text-blue fw-bold"> Create an
+                Account</a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script>
+
+
+
+  // $("#btn").on("click", function (event) {
+  //     event.preventDefault();
+  //     console.log("sdgdg");
+  //     var parameters = $('form').serialize();
+  //     console.log(parameters);
+  //     $.ajax({
+  //         url: "login.jsp?" + parameters,
+  //         data: parameters,
+  //         type: "POST",
+  //         success: function (data, textstatus, xhr) {
+  //             console.log("index data : " + data);
+
+  //             if (data.includes("false")) {
+  //                 alert("Username or password not Exists");
+  //             }
+  //             else if (data.includes("true")) {
+  //                 if ($("#Username").val() !== "Admin") {
+  //                     location.replace('upload.html');
+  //                 }
+  //                 else{
+  //                     location.replace('AdminPage.html');
+  //                 }
+  //             }
+
+  //             // else {
+  //             //     alert("Password is incorrect!");
+  //             // }
+
+  //         },
+  //         error: function (xhr, textstatus, errorThrown) {
+  //             console.log(xhr.responseText);
+  //         }
+  //     });
+  // });
+
+  $(document).ready(function () {
+
+    var currentFilename = window.location.pathname.split("/").pop();
+    console.log(currentFilename);
+
+    if(currentFilename==="AdminPage.html"){
+      $("#register").hide();
+    }
+    else{
+      $("#register").show();
+    }
+  });
+
+  function togglePassword() {
+    var password = document.getElementById("password");
+    var eyeIcon = document.querySelector(".password-toggle i");
+
+    if (password.type === "password") {
+      password.type = "text";
+      eyeIcon.classList.remove("fa-eye");
+      eyeIcon.classList.add("fa-eye-slash");
+    } else {
+      password.type = "password";
+      eyeIcon.classList.remove("fa-eye-slash");
+      eyeIcon.classList.add("fa-eye");
+    }
+  }
+
+</script>
+
+</html>

@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>Document</title>
+</head>
+<style>
+    .collage {
+        display: flex;
+        flex-direction: row;
+        height: 100vh;
+
+    }
+
+    #errorP {
+        position: relative;
+        padding: 2rem;
+        color: red;
+    }
+
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .inputlabel {
+        padding-right: 2rem;
+    }
+
+    li {
+        display: block;
+        padding: 2rem;
+    }
+
+    td,
+    th {
+        border-color: black;
+        border-style: solid;
+        border-width: thin;
+    }
+
+    td,
+    tr,
+    th {
+        padding: 1rem;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: auto;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+        text-align: center;
+    }
+
+    .dropdown-content {
+        display: none;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+    }
+
+    .dropdown-content.open {
+        display: block;
+    }
+
+    .form-group {
+        margin-bottom: 2rem;
+        padding: 1rem;
+
+    }
+
+    .disabled {
+        pointer-events: none;
+        opacity: 0.5;
+    }
+
+    .first {
+        width: 45vw;
+        position: relative;
+        left: 3rem;
+        /* background-color: lightblue; */
+    }
+
+    #firstP {
+        position: relative;
+        top: 3rem;
+        left: 5rem;
+    }
+
+
+    .second-third {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        /* width: 70%; */
+        margin-right: 6rem;
+        /* background-color: lightgreen; */
+        /* height: 100%; */
+
+    }
+
+    .second {
+        flex: 1;
+        /* background-color: yellow; */
+        height: fit-content;
+        width: 70%;
+        position: relative;
+        left: 10rem;
+        top: 3rem;
+    }
+
+
+
+    .third {
+        flex: 1;
+        /* background-color: salmon; */
+        height: fit-content;
+        width: 70%;
+        position: relative;
+        left: 10rem;
+
+    }
+
+    /* .fourth {
+        flex: 1;
+        width: 70%;
+        position: relative;
+        left: 10rem;
+        top: 2rem;
+        display: none;
+
+        /* background-color: sienna; */
+
+
+    /* body {
+        background: gray;
+    } */
+
+    nav {
+        display: flex;
+        justify-content: space-between;
+        background-color: #008080;
+        font-size: 1.4em;
+    }
+
+    a {
+        color: white;
+        text-decoration: none;
+        padding: 10px;
+
+    }
+
+    a:hover {
+        cursor: pointer;
+    }
+
+    /* 
+    .right {
+        float: right;
+    } */
+
+    form p {
+        width: 100%;
+        height: 100%;
+        text-align: center;
+
+        line-height: 170px;
+        color: #ffffff;
+        font-family: Arial;
+    }
+
+    form button {
+        margin: 0;
+        color: #fff;
+        background: #0f0e0e;
+        border: none;
+        width: 508px;
+        height: 35px;
+        margin-top: -20px;
+        margin-left: -4px;
+        margin-bottom: 2rem;
+        border-radius: 4px;
+        border-bottom: 4px solid #0f0e0e;
+        transition: all .2s ease;
+        outline: none;
+    }
+
+    form button:hover {
+        /* background: #149174; */
+        color: #0C5645;
+    }
+
+    form button:active {
+        border: 0;
+    }
+
+    nav {
+        /* display: flex;
+        justify-content: space-between; */
+        padding: 0.3rem;
+        background-color: #008080;
+        font-size: 1.4em;
+    }
+
+    a {
+        color: white;
+        text-decoration: none;
+    }
+
+    #content {
+        display: flex;
+        flex-direction: column;
+        margin-left: 1rem;
+        width: 50%;
+    }
+
+    #code {
+        width: 70%;
+        height: 50%;
+        margin-top: 2rem;
+
+
+        /* overflow: auto; */
+    }
+
+    #filename {
+        margin-top: 2rem;
+        margin-left: 14rem;
+    }
+
+    #errorContent {
+        width: 70%;
+    }
+
+    #errorContent,
+    #errorP {
+        display: none;
+        background-color: #0f0e0e;
+    }
+
+    .styled-line {
+        /* margin-right: 8rem; */
+        border: 5px solid #008080;
+        position: relative;
+        right: 3rem;
+        /* margin: 2rem 0; */
+        height: 100vh;
+        background-color: black;
+
+    }
+
+    hr {
+        border: 2px solid #008080;
+    }
+
+    .codeLoader {
+        top: 30%;
+        left: 10%;
+    }
+
+    .inputLoader {
+        top: 57%;
+        left: 70%;
+    }
+
+    .codeLoader,
+    .inputLoader {
+        position: fixed;
+
+        transform: translate(-50%, -50%);
+        /* display: flex; */
+        justify-content: center;
+        align-items: center;
+
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #008080;
+        width: 100px;
+        height: 100px;
+        -webkit-animation: spin 2s linear infinite;
+        display: none;
+        animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+
+<body>
+
+    <nav>
+        <a onclick="homePage()" class="right">Home</a>
+        <a onclick="clearSession()" class="right">Logout</a>
+    </nav>
+    <!-- <nav>
+      
+    </nav> -->
+
+    <div class="codeLoader"></div>
+    <div class="inputLoader"></div>
+
+    <div class="collage">
+        <div id="content">
+
+            <h4 id="filename"></h4>
+            <div id="code">
+
+                <div class="first">
+                    <h5 id="firstP"></h5>
+                </div>
+            </div>
+            <div id="errorContent">
+
+                <p id="errorP">Compiled Successfully</p>
+            </div>
+        </div>
+
+        <hr class="styled-line">
+
+        <div class="second-third">
+            <div class="second">
+                <form id="form2" action="" method="POST" class="p-3" style="background-color:white;">
+                    <div class="form-group">
+                        <div class="dropdown">
+                            <button style="width: 50%;" class="btn btn-default dropdown-toggle" type="button"
+                                id="dropdownMenu1" data-toggle="dropdown">
+                                Programs
+                                <span class="caret"></span>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-center mx-auto" id="dropdown-content"
+                                aria-labelledby="dropdownMenu1">
+
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <div class="form-group" style="display: inline-block;">
+                        <label for="radio1">Automatic Testing</label>
+                        <input type="radio" id="radio" name="radio" value="Automatic Testing">
+                    </div>
+                    <div class="form-group" style="display: inline-block;">
+                        <label for="radio2">Manual Testing</label>
+                        <input type="radio" id="radio" name="radio" value="Manual Testing">
+                    </div>
+                    <div class="form-group" style="display: inline-block;" id="inputform">
+                    </div>
+                    <button style="display: block; width: 70%;" id="btn" type="button"
+                        class="btn btn-primary">Submit</button>
+                    <!-- <hr id="inputHr"> -->
+
+                </form>
+            </div>
+
+            <div class="third">
+
+            </div>
+            <!-- 
+            <div class="fourth">
+                <hr>
+                <h2 style="text-align: center; padding: 2rem;">Output</h2>
+                <h4 style="text-align: center;" id="fourthP"></h4>
+            </div> -->
+
+        </div>
+    </div>
+</body>
+<script>
+
+    var testingType = "";
+    var testCount = 0;
+    var filename = "";
+    var program = "";
+    var errors = [];
+
+    var inputs = null;
+
+
+    $(document).ready(function () {
+        $.ajax({
+            url: 'SessionCheck',
+            type: 'POST',
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                console.log("response session : " + response);
+                if (response === "") {
+                    location.reload();
+                }
+            },
+            error: function (xhr, textstatus, errorThrown) {
+                console.log(xhr.responseText);
+            }
+        });
+
+    });
+
+    function homePage() {
+        location.replace("upload.html");
+    }
+
+
+    function showLoading() {
+
+        $(".codeLoader").show();
+        $(".inputLoader").show();
+
+    }
+
+    function hideLoading() {
+        // document.getElementById("errorP").innerHTML = "";
+        $(".codeLoader").hide();
+        $(".inputLoader").hide();
+    }
+
+    function home() {
+        location.replace("upload.html");
+    }
+
+    const input = document.querySelector("#input");
+    const btn = document.querySelector("#btn");
+    const dropdown = document.querySelector("#dropdown-content");
+    let selectedOption = "Programs";
+
+    dropdown.addEventListener("click", function (event) {
+
+        selectedOption = event.target.innerText;
+        $("#filename").html(selectedOption);
+        $("#code").css("overflow", "auto");
+        $("table").hide("");
+        $(".third").hide();
+
+        if (testingType === "Manual Testing") {
+            getManualInputs();
+        }
+
+        $("#errorContent").hide();
+        getFile();
+    });
+
+
+    function clearSession() {
+        $.ajax({
+            url: 'LogOut',
+            type: 'POST',
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                console.log("response session logout : " + response);
+                if (response !== "") {
+                    location.replace("index.html");
+                }
+            },
+            error: function (xhr, textstatus, errorThrown) {
+                console.log(xhr.responseText);
+            }
+        });
+        // location.replace("LogOut");
+    }
+
+
+    $('input[type="radio"]').click(function () {
+        testingType = $(this).val();
+
+
+
+        $("table").html("");
+        //  $("#fourthP").html("");
+        $("#errorP").html("");
+        $(".third").hide();
+        $("#outputP").remove();
+
+
+        if ($(this).val() === "Manual Testing") {
+
+            console.log("filename : " + filename);
+
+            if (filename === "") {
+                alert("Filename not selected!");
+            }
+            else {
+
+                console.log($(this).val());
+                //   compileCheck();
+                getManualInputs();
+                $("#inputHr").hide();
+                $(".input").show();
+            }
+
+        }
+        else {
+            $(".third").hide();
+            $(".inputcontent").html("");
+            $(".input").hide();
+        }
+        $("#errorContent").show();
+    });
+
+
+
+
+    $("#btn").on("click", function (e) {
+
+        $("#code").css("overflow", "auto");
+        //  $("#errorP").html("");
+
+        const radios = document.querySelectorAll('input[type="radio"]:checked');
+        if (selectedOption === "Programs") {
+            e.preventDefault();
+            alert("Select a program option.");
+        }
+
+        else if (radios.length !== 1) {
+            e.preventDefault();
+            alert("Select one testing option.");
+        } else {
+            console.log("Selected testing option: ", radios[0].value);
+            console.log("Selected program: ", selectedOption);
+
+            if (testingType !== "" && filename !== "") {
+                $(".third").html("");
+
+                $("#errorP").css("color", "lightgreen");
+                $("#errorP").hide();
+
+                $("#outputP").remove();
+
+
+                var i = 0;
+                alert("compiling your " + filename + " program");
+
+                if (testingType === "Automatic Testing") {
+
+                    setTimeout(function () {
+
+                        compileCheck();
+                        automaticTestingCall();
+                        automaticInput();
+
+                        $(".third").show();
+                        $(".second").show();
+                        $("#inputHr").show();
+                    }, 500);
+
+                    $("#firstP").hide();
+                    showLoading();
+                    $("#errorP").text("compiling....");
+
+                }
+                if (testingType === "Manual Testing") {
+
+                    var inputs = $(".manual");
+
+                    if (inputs.filter(function () { return !this.value; }).length) {
+                        $("#errorP").html("");
+                        alert("One of the input fields is empty. Please fill in all the fields.");
+                    }
+                    else {
+
+                        setTimeout(function () {
+
+                            $.ajax({
+
+                                url: "ManualServlet?filename=" + filename,
+                                async: false,
+                                cache: false,
+                                success: function (response) {
+                                }
+                            });
+
+                            ManualTestingCall();
+                            if (ManualOutput()) {
+                                console.log("true");
+                                getFile();
+                            }
+                            else {
+                                console.log("error on manual");
+                                $('#firstP').html("");
+
+                                var lines = program.split("\n");
+                                for (var i = 0; i < lines.length; i++) {
+                                    $('#firstP').append((i + 1) + ":&nbsp;&nbsp;" + lines[i] + "<br>");
+                                    console.log((i + 1) + ":&nbsp;&nbsp;" + lines[i] + "<br>");
+                                }
+
+                            }
+
+                            console.log("in manuakl!")
+                            console.log(program);
+
+                            $(".manual").val("");
+                        }, 500);
+
+                        $("#firstP").hide();
+                        $("#errorP").text("compiling....");
+                        $(".codeLoader").show();
+                    }
+
+                }
+
+                // $("#firstP").show();
+
+                $("#filename").html(filename);
+                $("#errorContent").show();
+
+
+
+                $("#first").hide();
+                $(".third").hide();
+                $("#errorP").show();
+            }
+        }
+    });
+
+
+    function ManualOutput() {
+
+        var result = false;
+
+        $.ajax({
+            url: "ManualOutputServlet?filename=" + filename,
+            async: false,
+            cache: false,
+
+            beforeSend: function () {
+                showLoading();
+            },
+
+            success: function (data) {
+
+                console.log("manual output:" + data + "he");
+                if (data !== "" && data !== "\n" && data !== null) {
+                    data = data.replace(/\n/g, "<br>");
+
+                    var output = "<p id='outputP' style='color:lightgreen;margin-left:2rem;'>Output:<br><br>" + data + "</p>";
+                    $("#errorP").text("Compiled Successfully!");
+                    $("#errorP").after(output);
+                    result = true;
+                }
+                else {
+                    var output = "<p id='outputP' style='color:red;margin-left:2rem;'>Output: Invalid Input</p>";
+                    $("#errorP").text("Compilation Failed!");
+                    $("#errorP").after(output);
+
+                }
+
+                // alert("compilation successfull");
+                $("#firstP").show();
+
+
+            },
+            complete: function () {
+                hideLoading();
+            }
+        });
+
+        return result
+    }
+
+    function compileCheck() {
+
+
+        $.ajax({
+            url: "NativeCompileCheck?filename=" + filename,
+            async: false,
+            cache: false,
+
+
+            beforeSend: function () {
+                showLoading();
+            },
+
+            success: function (data) {
+                console.log("error data: " + data);
+
+                $("#outputP").text("");
+
+                console.log(data);
+                $("#errorP").text("");
+
+                if (data.length == 0) {
+                    $("#errorP").text("Compiled Successfully!");
+                    $("#errorP").after(output);
+                }
+                else {
+                    for (var i = 0; i < data.length; i++) {
+                        console.log("eerrrorrpp: " + data[i]);
+                        $("#errorP").append(data[i] + "<br>");
+                    }
+                    $("#errorP").css("color", "red");
+                }
+            },
+            complete: function () {
+                hideLoading();
+            }
+        });
+    }
+
+    function getManualInputs() {
+
+        $(".codeLoader").show();
+        $(".inputLoader").show();
+
+
+        $.ajax({
+
+            url: "ManualServlet?filename=" + filename,
+            async: false,
+            cache: false,
+            success: function (response) {
+                console.log("manualinputservlet : " + response);
+                console.log(response.replace(/=/g, ':'));
+
+                var data = JSON.parse(response.replace(/=/g, ':'));
+                $("#inputform").html("");
+
+                var table = "<table id=\"inputTable\"> \
+                                <thead class=\"thead-light\"> \
+                                   <tr><th>Program Name</th>  <th>Type</th> <th>Variable name</th>  <th>Input</th> </tr> \
+                                </thead><tbody>";
+
+                var dataLength = Object.values(data).length;
+
+                var rowspans = [];
+
+
+                for (var i = 0; i < dataLength; i++) {
+                    var rowspan = 1;
+
+                    var key = Object.values(data)[i];
+                    console.log(key);
+                    var datas = Object.values(key);
+
+                    for (var j = 0; j < datas.length; j++) {
+                        var inputData = datas[j];
+                        var inputDataLength = inputData.length - 1;
+                        var value = inputData[inputDataLength];
+                        console.log("val row: " + value);
+                        if (value != "") {
+                            rowspan++;
+                            console.log("rowspan  : " + rowspan);
+                        }
+                        else {
+                            rowspan--;
+                            console.log("rowspan  : " + rowspan);
+                        }
+                    }
+                    rowspans.push(rowspan);
+                }
+
+                console.log("rowspan result : " + rowspans);
+
+
+
+                for (var i = 0; i < dataLength; i++) {
+
+                    var key = Object.values(data)[i];
+                    console.log(key);
+                    var datas = Object.values(key);
+
+                    var programName = Object.keys(data)[i];
+                    console.log("rowspan arr: " + rowspans[i]);
+
+                    table += "<tr><td rowspan=\"" + rowspans[i] + "\">" + programName + "</td>";
+                    //console.log("col: "+ datas.length);
+
+                    for (var j = 0; j < datas.length; j++) {
+
+                        var inputData = datas[j];
+                        var inputDataLength = inputData.length - 1;
+
+                        var variableName = Object.keys(key)[j];
+
+                        console.log(inputData);
+                        var type = inputData[0];
+                        var value = inputData[inputDataLength];
+
+                        console.log("val : " + value);
+                        console.log("type : " + type);
+
+                        if (value != "") {
+                            table += "<td>" + type + "</td>";
+                            table += "<td>" + variableName + "</td>";
+                            table += "<td><input class='manual'></td>";
+                            table += "</tr>";
+                        }
+
+                    }
+                }
+                table += "</tbody></table>";
+                console.log(Object.keys(data));
+
+                $("#inputform").append(table);
+            },
+            complete: function () {
+                hideLoading();
+            }
+
+        });
+    }
+    function getFileLoad() {
+        // $('#firstP').html("hello");
+        $('#firstP').hide();
+    }
+
+    function getFile() {
+        $.ajax({
+            url: "DisplayFile?filename=" + selectedOption,
+            async: false,
+            cache: false,
+
+            success: function (data) {
+                $('#firstP').html("");
+                console.log("DISPLAY CONTENT : " + selectedOption);
+                console.log(data);
+                data = data.replace(/</g, "&lt;").replace(/>/g, "&gt;")
+                // data = data.replace(/\n/g, "<br>");
+
+                program = data;
+
+                var lines = data.split("\n");
+                for (var i = 0; i < lines.length; i++) {
+                    $('#firstP').append((i + 1) + ":&nbsp;&nbsp;" + lines[i] + "<br>");
+                    console.log((i + 1) + ":&nbsp;&nbsp;" + lines[i] + "<br>");
+                }
+
+
+            }
+        });
+    }
+
+    function automaticTestingCall() {
+
+        $.ajax({
+            url: "OutputServlet?filename=" + filename,
+            async: false,
+            cache: false,
+
+            beforeSend: function () {
+                showLoading();
+            },
+
+            success: function (data) {
+                // // $("#fourthP").html(data);
+                // if(data!=""){
+                // }
+
+                console.log("data: " + data);
+                data = data.replace(/\n/g, "<br>");
+
+                var output = "<p id='outputP' style='color:lightgreen;margin-left:2rem;'>Output: <br><br>" + data + "</p>";
+                $("#errorP").text("Compilation Successfull");
+                $("#errorP").after(output);
+                $("#first").show();
+                $(".third").show();
+
+                //  alert("compilation successfull");
+
+                getFile();
+
+                hideLoading();
+                $("#firstP").show();
+
+            },
+            complete: function () {
+                hideLoading();
+            }
+        });
+    }
+
+
+
+    function automaticInput() {
+        $.ajax({
+            url: "Input",
+            async: false,
+            cache: false,
+
+            beforeSend: function () {
+                showLoading();
+            },
+
+            success: function (data) {
+                console.log("data");
+                console.log(data);
+                //    data = data.replace(/=/g, ":");
+                //  data = JSON.parse(data);
+
+                data = data.replace(/=/g, ':');
+
+                data = data.replace(/,/g, ',');
+
+                console.log(data);
+
+                data = JSON.parse(data);
+
+                let table = $("<table class='table table-bordered' style='text-align:center;'></table>").css({
+                    "margin": "0 auto"
+                });
+
+
+                let headerRow = $("<tr></tr>");
+                headerRow.append($("<th   style='text-align:center;'>Program</th>"));
+                headerRow.append($("<th   style='text-align:center;'>Variable</th>"));
+                headerRow.append($("<th   style='text-align:center;'>Type</th>"));
+                headerRow.append($("<th   style='text-align:center;'>Input</th>"));
+
+                table.append(headerRow);
+
+                console.log("DATA LENGTH.................." + Object.values(data).length);
+
+                var dataLength = Object.values(data).length;
+
+                for (var i = 0; i < dataLength; i++) {
+
+                    var key = Object.values(data)[i];
+                    console.log(key);
+                    var datas = Object.values(key);
+
+                    var programName = Object.keys(data)[i];
+
+
+                    let dataRow = $("<tr></tr>");
+
+                    dataRow.append($("<td rowspan=\"" + datas.length + "\">" + programName + "</td>"));
+                    //console.log("col: "+ datas.length);
+
+                    for (var j = 0; j < datas.length; j++) {
+
+                        var inputData = datas[j];
+                        var inputDataLength = inputData.length - 1;
+
+                        var variableName = Object.keys(key)[j];
+
+                        console.log(inputData);
+                        var type = inputData[0];
+                        var value = inputData[inputDataLength];
+
+                        console.log("val : " + value);
+                        console.log("type : " + type);
+
+                        if (value != "") {
+
+                            dataRow.append($("<td>" + variableName + "</td>"));
+                            dataRow.append($("<td>" + type + "</td>"));
+                            dataRow.append($("<td>" + value + "</td>"));
+                        }
+                        table.append(dataRow);
+                        dataRow = $("<tr></tr>");
+                    }
+
+                }
+                console.log(Object.keys(data));
+
+                $(".third").append(table);
+            },
+            complete: function () {
+                hideLoading();
+            }
+        });
+    }
+
+    function ManualTestingCall() {
+
+        $(".codeLoader").show();
+        $(".inputLoader").show();
+
+        var inputs = $(".manual");
+        console.log("inputtts: " + inputs);
+
+        var values = [];
+
+        inputs.each(function () {
+            values.push($(this).val());
+        });
+
+        $.ajax({
+            url: "ManualInput?filename=" + filename + "&values=" + values.join("&values="),
+            type: "POST",
+            async: false,
+            cache: false,
+            success: function (response) {
+                for (var i = 0; i < values.length; i++) {
+                    console.log("valuesss: " + values[i]);
+                }
+                console.log("response of manual");
+                hideLoading();
+                $("#firstP").show();
+            }
+        });
+    }
+
+
+
+
+    $("#dropdownMenu1").on("click", function () {
+
+        $.ajax({
+            type: 'GET',
+            url: 'MyFiles',
+
+            success: function (response) {
+                var files = JSON.parse(response);
+                console.log(JSON.parse(response));
+
+                //Empty the ul 
+
+                if (response == 0) {
+                    console.log("file: res" + response)
+                    $("#dropdownMenu1").text("No files uploaded!");
+                }
+                else {
+                    const ul = document.getElementById("dropdown-content");
+                    ul.innerHTML = "";
+                    // var deleteIcon = " <span class='delete-icon' onclick=deleteItem(event)">x</span>";
+
+                    for (var i = 0; i < files.length; i++) {
+
+                        var file = files[i];
+                        console.log("file: " + file)
+
+                        var li = document.createElement("li");
+                        li.classList.add("dropdown-item");
+                        li.style.cursor = "pointer";
+
+
+                        li.textContent = file;
+
+                        li.addEventListener("click", function () {
+                            filename = $(this).text();
+                            console.log(filename);
+
+                            $("#dropdownMenu1").text(filename);
+                            if (testingType === "Manual Testing") {
+                                getManualInputs();
+                            }
+
+
+                        });
+                        ul.appendChild(li);
+                    }
+                }
+            }
+        });
+    });
+
+  //  function deleteItem(event) {
+//     // Get the parent li element
+//     var parentLi = event.target.parentNode;
+//     // Remove the li element from the dropdown menu
+//     parentLi.remove();
+//   }
+
+</script>
+
+</html>

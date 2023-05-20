@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<style>
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 50px;
+    }
+
+    .file-upload-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #f2f2f2;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 2px 2px 5px #888888;
+    }
+
+    .pagination-btn {
+        margin-right: 0.2rem;
+    }
+
+    .pagination-container {
+        margin-right: auto;
+        margin-left: auto;
+        text-align: center;
+    }
+
+    .options {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .radio-button {
+        margin-right: 20px;
+    }
+
+    .file-input {
+        margin-top: 20px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #cccccc;
+        display: none;
+    }
+
+    .submit-button,
+    .remove-userbutton {
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #4CAF50;
+        color: white;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        margin: 0.5rem;
+    }
+
+    .remove-userbutton {
+        display: none;
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: space-between;
+
+    }
+
+    #userInfo {
+        display: none;
+    }
+
+    nav {
+        display: flex;
+        justify-content: space-between;
+        background-color: #008080;
+        font-size: 1.4em;
+    }
+
+    a {
+        color: white;
+        text-decoration: none;
+        padding: 10px;
+
+    }
+
+    a:hover {
+        cursor: pointer;
+    }
+
+    #run {
+        font-size: large;
+        text-decoration: none;
+        padding: 2rem;
+    }
+
+    #rundiv {
+        background-color: #4CAF50;
+        margin: 3rem;
+        padding: 1rem;
+        border-radius: 2rem;
+    }
+</style>
+
+<body>
+
+    <body>
+        <nav>
+            <a onclick="clearSession()" class="right">Logout</a>
+        </nav>
+
+        <div class="container">
+
+            <form class="file-upload-form">
+                <h2>File Upload</h2>
+                <div class="options">
+                    <div class="radio-button">
+                        <input type="radio" id="global-upload" name="upload-option" value="global" checked>
+                        <label for="global-upload">Global Upload</label>
+                    </div>
+                    <div class="radio-button">
+                        <input type="radio" id="individual-upload" name="upload-option" value="individual">
+                        <label for="individual-upload">Individual Upload</label>
+                    </div>
+
+                    <div class="radio-button">
+                        <input type="radio" id="single-upload" name="upload-option" value="single">
+                        <label for="single-upload">single Upload</label>
+                    </div>
+
+                </div>
+
+                <input type="file" class="file-input" name="fileupload">
+
+                <div class="table">
+                    <table id="userInfo" class="table">
+
+                    </table>
+                </div>
+                <div class="button-container">
+                    <button type="button" class="submit-button">Upload</button>
+                </div>
+            </form>
+            <div id="rundiv">
+                <a id="run" href="home.html">Run my Program</a>
+            </div>
+
+        </div>
+
+        <script>
+            const globalUploadRadio = document.querySelector('#global-upload');
+            const individualUploadRadio = document.querySelector('#individual-upload');
+            const removeFileRadio = document.querySelector('#removeFile');
+            const removeUsersRadio = document.querySelector('#removeUsers');
+
+            const table = document.querySelector('#userInfo');
+            var listOfUsers = [];
+            // var deleteUsers = [];
+            var uploadType = "";
+
+
+            var params = new URLSearchParams(location.search);
+            var message = params.get("message");
+
+            $("input[name='upload-option']").click(function () {
+                var value = $(this).val();
+                uploadType = value;
+                console.log("Radio button value: " + value);
+            });
+
+
+            $(document).ready(function () {
+                $.ajax({
+                    url: 'SessionCheck',
+                    type: 'POST',
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        console.log("response session : " + response);
+                        if (response === "") {
+                            location.reload();
+                        }
+                    },
+                    error: function (xhr, textstatus, errorThrown) {
+                        console.log(xhr.responseText);
+                    }
+                });
+
+            });
+
+            function clearSession() {
+                $.ajax({
+                    url: 'LogOut',
+                    type: 'POST',
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        console.log("response session logout : "+response);
+                        if(response !== ""){
+                            location.replace("index.html");
+                        }
+                    },
+                    error: function (xhr, textstatus, errorThrown) {
+                        console.log(xhr.responseText);
+                    }
+                });
+                // location.replace("LogOut");
+            }
+
+            var checkedItems = [];
+
+
+            $(document).on('click', 'input[type="checkbox"]', function () {
+                var text = $(this).closest("tr").find("td").eq(1).text();
+                if (this.checked) {
+                    checkedItems.push(text);
+                } else {
+                    checkedItems = checkedItems.filter(function (item) {
+                        return item !== text;
+                    });
+                }
+                console.log(checkedItems);
+            });
+
+
+
+            $(".submit-button").on("click", function (event) {
+                var checkedValue = $("input[name='upload-option']").val();
+                console.log(checkedValue);
+
+
+                if ($('input[type="checkbox"]').length > 0 || checkedValue === "global") {
+
+                    if ($('input[type="checkbox"]:checked').length === 0 && checkedValue != "global") {
+                        alert("Please select at least one checkbox.");
+                        event.preventDefault();
+                    }
+                    else {
+                        console.log("checkedval : " + uploadType);
+                        if (uploadType === "single") {
+                            var fileupload = $(".file-input")[0].files[0];
+                            var formData = new FormData();
+
+                            formData.append("file", fileupload);
+                            console.log("single uploadtype: " + uploadType);
+                            // formData.append("type",uploadType);
+                            console.log("form: " + formData);
+                            $.ajax({
+                                url: 'FileUpload?type=' + uploadType + "&single=myself",
+                                type: 'POST',
+                                data: formData,
+                                processData: false,
+                                contentType: false,
+                                success: function (response) {
+                                    console.log("response: " + response);
+                                    alert(response);
+                                    $('.check').prop('checked', false);
+                                    checkedItems = [];
+                                },
+                                error: function (xhr, textstatus, errorThrown) {
+                                    console.log(xhr.responseText);
+                                }
+                            });
+                            $('.check:checked').prop('checked', false);
+                            $('.file-input').val("");
+                        }
+                        else if ($('.file-input').val() != '') {
+
+                            var fileupload = $(".file-input")[0].files[0];
+                            var formData = new FormData();
+
+                            formData.append("file", fileupload);
+                            console.log("uploadtype: " + uploadType);
+                            // formData.append("type",uploadType);
+                            console.log("form: " + formData);
+                            $.ajax({
+                                url: 'FileUpload?type=' + uploadType + "&indivitual=" + checkedItems.join("&indivitual="),
+                                type: 'POST',
+                                data: formData,
+                                processData: false,
+                                contentType: false,
+                                success: function (response) {
+                                    console.log("response: " + response);
+                                    alert(response);
+                                    $('.check').prop('checked', false);
+                                    checkedItems = [];
+                                },
+                                error: function (xhr, textstatus, errorThrown) {
+                                    console.log(xhr.responseText);
+                                }
+                            });
+                            $('.check:checked').prop('checked', false);
+                            $('.file-input').val("");
+                        } else {
+                            alert("file has not been selected, you cannot submit the form");
+                        }
+                    }
+                }
+                else {
+                    console.log("error");
+                }
+            });
+
+
+            individualUploadRadio.addEventListener('change', () => {
+                if (individualUploadRadio.checked) {
+                    $(".remove-userbutton").hide();
+                    $(".submit-button").show();
+                    $(".file-input").show();
+                    createTable();
+
+                } else {
+                    table.style.display = 'none';
+                }
+            });
+
+            function createTable() {
+                $("div.table").html("");
+                $("div.table").show();
+
+                // $("#previousbtn").hide();
+                // $("#nextbtn").hide();
+                table.style.display = 'block';
+
+                $.ajax({
+                    type: 'GET',
+                    url: 'MyFiles?registeredUsers=users',
+                    success: function (response) {
+                        var names = JSON.parse(response);
+                        console.log(JSON.parse(response));
+
+                        var itemsPerPage = 3;
+
+                        var table = "<table class=\"table\"> \
+                                <thead class=\"thead-light\"> \
+                                   <tr><th>S.no</th> <th>Users</th> <th>Check</th> </tr> \
+                                </thead><tbody>";
+
+                        for (var i = 0; i < names.length; i++) {
+                            var num = i + 1;
+                            table += "<tr><td>" + num + "</td><td>" + names[i] + "</td><td><input class='check' type='checkbox'></td></tr>";
+                        }
+
+                        table += "</tbody></table>";
+                        $("div.table").append(table);
+
+
+                        function addPaginationButtons(tableSelector, totalPages) {
+                            var paginationContainer = $("<div class='pagination-container'></div>");
+                            if (totalPages > 1) {
+                                var prevBtn = $("<button type='button' class='pagination-btn'>Previous</button>");
+                                paginationContainer.append(prevBtn);
+                                for (var i = 1; i <= totalPages; i++) {
+                                    var btn = $("<button type='button' id='nextbtn' class='pagination-btn'>" + i + "</button>");
+                                    paginationContainer.append(btn);
+                                }
+                                var nextBtn = $("<button type='button' id='previousbtn'class='pagination-btn'>Next</button>");
+                                paginationContainer.append(nextBtn);
+                            }
+                            $(tableSelector).after(paginationContainer);
+                        }
+
+
+                        function addClickListeners(tableSelector, itemsPerPage) {
+                            var currentPage = 1;
+                            $(".pagination-btn").click(function () {
+                                var pageNumber = $(this).text();
+
+                                if (pageNumber === "Previous") {
+                                    if (currentPage > 1) {
+                                        currentPage--;
+                                        showPage(tableSelector, itemsPerPage, currentPage);
+                                    }
+                                } else if (pageNumber === "Next") {
+                                    if (currentPage < totalPages) {
+                                        currentPage++;
+                                        showPage(tableSelector, itemsPerPage, currentPage);
+                                    }
+                                } else {
+                                    currentPage = parseInt(pageNumber);
+                                    showPage(tableSelector, itemsPerPage, currentPage);
+                                }
+                            });
+                        }
+
+
+                        function showPage(tableSelector, itemsPerPage, pageNumber) {
+                            var startIndex = (pageNumber - 1) * itemsPerPage;
+                            var endIndex = startIndex + itemsPerPage;
+                            $(tableSelector + " tbody tr").hide().slice(startIndex, endIndex).show();
+
+                            if (pageNumber == 1) {
+                                $('.pagination-container button:first-child').hide();
+                            } else {
+                                $('.pagination-container button:first-child').show();
+                            }
+
+                            if (pageNumber == totalPages) {
+                                $('.pagination-container button:last-child').hide();
+                            } else {
+                                $('.pagination-container button:last-child').show();
+                            }
+                        }
+
+                        var totalRows = $("table tbody tr").length;
+                        var totalPages = Math.ceil(totalRows / itemsPerPage);
+                        addPaginationButtons("table", totalPages);
+                        addClickListeners("table", itemsPerPage);
+                        showPage("table", itemsPerPage, 1);
+
+                    }
+                });
+            }
+
+            globalUploadRadio.addEventListener('change', () => {
+                if (globalUploadRadio.checked) {
+                    table.style.display = 'none';
+                    $(".remove-userbutton").hide();
+                    $(".submit-button").show();
+                    $("div.table").css("display", "none");
+                    $(".file-input").show();
+                }
+            });
+
+        </script>
+
+    </body>
+
+</html>

@@ -1,0 +1,173 @@
+<web-app>
+   <servlet>
+      <servlet-name>FileUpload</servlet-name>
+      <servlet-class>com.FileUpload</servlet-class>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>FileUpload</servlet-name>
+      <url-pattern>/FileUpload</url-pattern>
+   </servlet-mapping>
+   <servlet>
+      <servlet-name>ManualInput</servlet-name>
+      <servlet-class>com.ManualInput</servlet-class>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>ManualInput</servlet-name>
+      <url-pattern>/ManualInput</url-pattern>
+   </servlet-mapping>
+   <servlet>
+      <servlet-name>NativeCompileCheck</servlet-name>
+      <servlet-class>com.NativeCompileCheck</servlet-class>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>NativeCompileCheck</servlet-name>
+      <url-pattern>/NativeCompileCheck</url-pattern>
+   </servlet-mapping>
+   <servlet>
+      <servlet-name>ManualOutputServlet</servlet-name>
+      <servlet-class>com.ManualOutputServlet</servlet-class>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>ManualOutputServlet</servlet-name>
+      <url-pattern>/ManualOutputServlet</url-pattern>
+   </servlet-mapping>
+
+   <servlet>
+      <servlet-name>CompileServlet</servlet-name>
+      <servlet-class>com.CompileServlet</servlet-class>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>CompileServlet</servlet-name>
+      <url-pattern>/CompileServlet</url-pattern>
+   </servlet-mapping>
+
+   <servlet>
+      <servlet-name>LogOut</servlet-name>
+      <servlet-class>com.LogOut</servlet-class>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>LogOut</servlet-name>
+      <url-pattern>/LogOut</url-pattern>
+   </servlet-mapping>
+
+
+   <servlet>
+      <servlet-name>myresult</servlet-name>
+      <servlet-class>com.Result</servlet-class>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>myresult</servlet-name>
+      <url-pattern>/result</url-pattern>
+   </servlet-mapping>
+
+   <servlet>
+      <servlet-name>OutputServlet</servlet-name>
+      <servlet-class>com.OutputServlet</servlet-class>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>OutputServlet</servlet-name>
+      <url-pattern>/OutputServlet</url-pattern>
+   </servlet-mapping>
+
+   <servlet>
+      <servlet-name>ManualServlet</servlet-name>
+      <servlet-class>com.ManualServlet</servlet-class>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>ManualServlet</servlet-name>
+      <url-pattern>/ManualServlet</url-pattern>
+   </servlet-mapping>
+
+   <servlet>
+      <servlet-name>Input</servlet-name>
+      <servlet-class>com.Input</servlet-class>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>Input</servlet-name>
+      <url-pattern>/Input</url-pattern>
+   </servlet-mapping>
+
+   <servlet>
+      <servlet-name>DisplayFile</servlet-name>
+      <servlet-class>com.DisplayFile</servlet-class>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>DisplayFile</servlet-name>
+      <url-pattern>/DisplayFile</url-pattern>
+   </servlet-mapping>
+
+   <servlet>
+      <servlet-name>MyFiles</servlet-name>
+      <servlet-class>com.MyFiles</servlet-class>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>MyFiles</servlet-name>
+      <url-pattern>/MyFiles</url-pattern>
+   </servlet-mapping>
+
+   <servlet>
+      <servlet-name>SessionCheck</servlet-name>
+      <servlet-class>com.SessionCheck</servlet-class>
+   </servlet>
+   <servlet-mapping>
+      <servlet-name>SessionCheck</servlet-name>
+      <url-pattern>/SessionCheck</url-pattern>
+   </servlet-mapping>
+
+
+   <security-constraint>
+
+      <web-resource-collection>
+         <web-resource-name>admin file</web-resource-name>
+         <description/>
+         <url-pattern>/AdminPage.html</url-pattern>
+      </web-resource-collection>
+      <auth-constraint>
+         <description/>
+         <role-name>admin</role-name>
+      </auth-constraint>
+   </security-constraint>
+
+   <security-constraint>
+
+      <web-resource-collection>
+         <web-resource-name>user file</web-resource-name>
+         <description/>
+         <url-pattern>/upload.html</url-pattern>
+         <url-pattern>/home.html</url-pattern>
+      </web-resource-collection>
+      <auth-constraint>
+         <description/>
+         <role-name>user</role-name>
+      </auth-constraint>
+   </security-constraint>
+
+ 
+   <login-config>
+      <auth-method>FORM</auth-method>
+      <form-login-config>
+         <form-login-page>/login.html</form-login-page>
+         <form-error-page>/error.html</form-error-page>
+      </form-login-config>
+   </login-config>
+
+   <security-role>
+      <description/>
+      <role-name>user</role-name>
+    </security-role>
+    <security-role>
+      <description/>
+      <role-name>admin</role-name>
+    </security-role>
+
+    <error-page>
+      <error-code>403</error-code>
+      <location>/AccessDenied.html</location>
+    </error-page>
+
+
+   <!-- <realm className="org.apache.catalina.realm.JAASRealm"
+      appName="NativeTesting"
+      userClassNames="com.UserPrincipal,com.PasswordPrincipal" /> -->
+
+</web-app>

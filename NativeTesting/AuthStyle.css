@@ -1,0 +1,62 @@
+body {
+    color: white;
+}
+
+form:before {
+    content: '';
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: -1;
+    border-radius: 10px;
+}
+
+#cover {
+    background: #222 center center no-repeat;
+    background-size: cover;
+    height: 100%;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+/* url('https://unsplash.it/1920/1080/?random')  */
+#cover-caption {
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+#register {
+    color: azure;
+    color: inherit;
+}
+
+a:hover{
+    cursor: pointer;
+}
+
+#register-container{
+    position: relative;
+    top: 1rem;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+
+  input[type="password"] {
+    position: relative;
+  }
+  .password-container {
+    position: relative;
+    width: 250;
+  }
